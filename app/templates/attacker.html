@@ -1,47 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Attacker Panel</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚔️ Threat Simulation Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial; background:#111827; color:white; padding:20px; }
-.card { background:#1f2937; padding:20px; border-radius:10px; }
-button { padding:10px; background:red; color:white; border:none; }
+:root {
+    --bg-primary: #070a13;
+    --bg-secondary: rgba(17, 24, 39, 0.7);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --cyber-red: #ef4444;
+    --cyber-blue: #3b82f6;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    background: radial-gradient(circle at 50% 50%, #1c0f18 0%, var(--bg-primary) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: var(--bg-secondary);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--cyber-red);
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    letter-spacing: 0.5px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+select, input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+select:focus, input:focus {
+    border-color: var(--cyber-red);
+    background: rgba(30, 41, 59, 0.8);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+}
+
+.btn-attack {
+    background: linear-gradient(135deg, var(--cyber-red), #b91c1c);
+    color: white;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-attack:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+}
+
+.btn-back {
+    background: rgba(30, 41, 59, 0.6);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-back:hover {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: var(--cyber-blue);
+    transform: translateY(-2px);
+}
+
+.console-output {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    min-height: 50px;
+    color: #10b981;
+    overflow-y: auto;
+    max-height: 120px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    display: none;
+}
 </style>
 </head>
-
 <body>
 
-<h1>Attack Panel</h1>
-
 <div class="card">
+    <h1>⚔️ Threat Injection Console</h1>
+    
+    <label for="type">Select Vector Profile</label>
+    <select id="type">
+        <option value="Brute Force">Brute Force Attack</option>
+        <option value="Password Spray">Password Spraying</option>
+        <option value="Credential Stuffing">Credential Stuffing</option>
+    </select>
 
-<select id="type">
-<option>Brute Force</option>
-<option>Password Spray</option>
-<option>DDoS</option>
-</select>
+    <label for="intensity">Request Rate Volumetrics</label>
+    <input type="number" id="intensity" value="20" min="1" max="200">
 
-<input id="intensity" placeholder="Number of attacks">
+    <button class="btn-attack" onclick="attack()">🚀 Deploy Exploit Sequence</button>
+    <button class="btn-back" onclick="goBack()">🛡️ Return to Command Dashboard</button>
 
-<button onclick="attack()">Launch Attack</button>
-
-<p id="status"></p>
-
+    <div id="console" class="console-output"></div>
 </div>
 
 <script>
 async function attack(){
     const type = document.getElementById("type").value;
     const intensity = document.getElementById("intensity").value;
+    const consoleBox = document.getElementById("console");
+    
+    consoleBox.style.display = "block";
+    consoleBox.innerText = "Initializing attack sequence...\n";
+    consoleBox.style.color = "#3b82f6";
 
-    await fetch("/attack",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({type,intensity})
-    });
+    try {
+        const res = await fetch("/attack", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type, intensity})
+        });
+        
+        const data = await res.json();
+        consoleBox.innerText = `[SUCCESS] ${data.message}\nDeploy packet sequence transmitted.`;
+        consoleBox.style.color = "#10b981";
+    } catch(err) {
+        consoleBox.innerText = `[ERROR] Failed to establish bridge connection to payload receiver.`;
+        consoleBox.style.color = "#ef4444";
+    }
+}
 
-    document.getElementById("status").innerText = "Attack launched!";
+function goBack(){
+    window.location.href = "/";
 }
 </script>
 
