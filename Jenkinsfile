@@ -16,9 +16,9 @@ pipeline {
         stage('Dependency Audit (SCA)') {
             steps {
                 script {
-                    echo 'Running pip-audit for third-party vulnerabilities...'
-                    sh 'pip install pip-audit'
-                    sh 'pip-audit -r app/requirements.txt'
+                    echo 'Running pip-audit for third-party vulnerabilities on Windows...'
+                    bat 'pip install pip-audit'
+                    bat 'pip-audit -r app/requirements.txt'
                 }
             }
         }
@@ -26,9 +26,9 @@ pipeline {
         stage('Static Analysis (SAST)') {
             steps {
                 script {
-                    echo 'Running Bandit security analysis...'
-                    sh 'pip install bandit'
-                    sh 'bandit -r app/ -ll'
+                    echo 'Running Bandit security analysis on Windows...'
+                    bat 'pip install bandit'
+                    bat 'bandit -r app/ -ll'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building secure non-root Docker image...'
-                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    bat 'docker build -t "%DOCKER_IMAGE%" .'
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     echo 'Removing old running application instances...'
-                    sh "docker rm -f ${CONTAINER_NAME} || true"
+                    bat 'docker rm -f "%CONTAINER_NAME%" || exit 0'
                 }
             }
         }
@@ -55,7 +55,8 @@ pipeline {
             steps {
                 script {
                     echo 'Running container with logs volume mount...'
-                    sh "docker run -d -p 5000:5000 -v \$(pwd)/logs:/app/logs --name ${CONTAINER_NAME} ${DOCKER_IMAGE}"
+                    // %CD% is the absolute path to the current working directory in Windows Command Prompt
+                    bat 'docker run -d -p 5000:5000 -v "%CD%/logs:/app/logs" --name "%CONTAINER_NAME%" "%DOCKER_IMAGE%"'
                 }
             }
         }
