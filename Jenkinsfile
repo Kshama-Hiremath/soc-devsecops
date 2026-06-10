@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "soc-app"
         CONTAINER_NAME = "soc-container"
+        PATH = "C:\\Users\\agrls\\anaconda3;C:\\Users\\agrls\\anaconda3\\Scripts;${env.PATH}"
     }
 
     stages {
