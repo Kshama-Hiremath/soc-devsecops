@@ -25,3 +25,36 @@ A Flask-based Security Operations Center (SOC) simulation project demonstrating 
 | CI/CD | Jenkins |
 | Version Control | Git, GitHub |
 | Web Technologies | HTML, CSS, Jinja2 |
+
+
+## 🏗️ Project Architecture
+
+```text
+                   +----------------------+
+                   |      GitHub Repo     |
+                   +----------+-----------+
+                              |
+                              | Source Code
+                              v
+                   +----------------------+
+                   |      Jenkins CI      |
+                   +----------+-----------+
+                              |
+                              | Build Pipeline
+                              v
+                   +----------------------+
+                   | Docker & Docker Compose |
+                   +----------+-----------+
+                              |
+                              | Containerized Deployment
+                              v
+                   +----------------------+
+                   |   Flask Web App      |
+                   +----------+-----------+
+                              |
+                              | HTTP Requests
+                              v
+                   +----------------------+
+                   |      End User        |
+                   +----------------------+
+```
