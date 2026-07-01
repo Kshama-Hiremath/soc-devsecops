@@ -79,3 +79,51 @@ soc-devsecops/
 ├── README.md
 └── .gitignore
 ```
+
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Kshama-Hiremath/soc-devsecops.git
+cd soc-devsecops
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+pip install -r app/requirements.txt
+```
+
+### 3️⃣ Run the Application Locally
+
+```bash
+python app/app.py
+```
+
+Open your browser and visit:
+
+```text
+http://localhost:5000
+```
+
+### 4️⃣ Run Using Docker
+
+```bash
+docker compose up --build
+```
+
+The application will be available at:
+
+```text
+http://localhost:5000
+```
+
+### 5️⃣ Jenkins Pipeline
+
+- Start Jenkins.
+- Create a **Pipeline** job.
+- Configure the repository URL.
+- Use the existing `Jenkinsfile`.
+- Build the pipeline to automate the project workflow.
