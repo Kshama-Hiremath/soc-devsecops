@@ -13,3 +13,15 @@ A Flask-based Security Operations Center (SOC) simulation project demonstrating 
 - 📁 Centralized log management through Docker volumes.
 - 👥 Team-based development using Git and GitHub.
 - ⚡ Lightweight and easy to deploy.
+
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Programming Language | Python |
+| Backend Framework | Flask |
+| Containerization | Docker, Docker Compose |
+| CI/CD | Jenkins |
+| Version Control | Git, GitHub |
+| Web Technologies | HTML, CSS, Jinja2 |
