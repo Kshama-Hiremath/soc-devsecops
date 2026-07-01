@@ -58,3 +58,24 @@ A Flask-based Security Operations Center (SOC) simulation project demonstrating 
                    |      End User        |
                    +----------------------+
 ```
+
+
+## 📂 Project Structure
+
+```text
+soc-devsecops/
+│
+├── app/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── templates/
+│
+├── attacker/
+│   └── attacker.py
+│
+├── Dockerfile
+├── docker-compose.yml
+├── Jenkinsfile
+├── README.md
+└── .gitignore
+```
